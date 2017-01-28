@@ -28,7 +28,7 @@ module.exports = class Bot {
             this.parseResponse(data);
 
             data.failed ? this.getLongPoll() : this.callLongPoll(data.ts);
-        }).catch(e => {this.getLongPoll()});
+        }).catch(this.getLongPoll);
     }
 
     parseResponse(data) {

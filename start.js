@@ -12,9 +12,10 @@ new Server().then(data => {
         bot.setSocketHandler(socketHandler);
 
         bot.pushCommand('ALL', __dirname + '/app/Controllers/commands/text');
+        bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
 
-        bot.pushCommand('cmd/цмд', data => {
-            data.api.call('messages.send', {peer_id: data.msg.msgpeer, message: 'хуй тебе а не cmd'});
+        bot.pushCommand('тест', data => {
+            data.api.send(123, data.msg);
         });
     });
 

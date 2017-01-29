@@ -3,6 +3,7 @@ module.exports = class Vk extends require('./vkext/props') {
         super();
 
         this.request = require('./http');
+        this.stuff = require('./stuff');
         this.uri = ['https://api.vk.com/method/', 'https://oauth.vk.com/token'];
         this.prefix = '[Modules/VK]';
     }

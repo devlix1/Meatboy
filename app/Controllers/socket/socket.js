@@ -12,7 +12,7 @@ module.exports = class Socket {
     }
 
     handler(name, data) {
-        this.event.emit(name, data);
+        this.socket.emit(name, data);
     }
 
     emit() {

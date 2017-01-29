@@ -52,14 +52,17 @@ module.exports = class Bot {
         const data = {api: this.api, msg};
 
         if (this.cmds['ALL'])
-            this.cmds['ALL'].handler(data);
+            this.cmds['ALL'].class.handler(data);
         
         if (msg.cmdname) {
             for (let cmd in this.cmds) {
                 const alias = cmd.split('/');
 
                 if (alias.indexOf(msg.cmdname.toLowerCase()) >= 0) {
-                    this.cmds[cmd].handler(data);
+                    if (this.cmds[cmd].callback)
+                        this.cmds[cmd].handler(data);
+                    else
+                        this.cmds[cmd].class.handler(data);
                 }
             }
         }
@@ -68,7 +71,13 @@ module.exports = class Bot {
     pushCommand(alias, handler) {
         this.cmds[alias] = {};
 
-        this.cmds[alias].handler = typeof handler === 'function' ? handler : new (require(handler))().handler;
+        if (typeof handler === 'function') {
+            this.cmds[alias].callback = true;
+            this.cmds[alias].handler = handler;
+        } else {
+            this.cmds[alias].callback = false;
+            this.cmds[alias].class = new (require(handler))();
+        }
     }
 
     setSocketHandler(handler) {
@@ -97,8 +106,10 @@ module.exports = class Bot {
             msgname: data[5],
             msgtext: data[6],
             msgattach: data[7],
-            msgsender: data[7].from
         };
+
+        msg.msgdialog = msg.msgpeer > 2e9 || false;
+        msg.msgsender = msg.msgpeer > 2e9 ? msg.msgattach.from : msg.msgpeer;
 
         if (command) {
             msg.cmdtrigger = command[1];
@@ -106,8 +117,6 @@ module.exports = class Bot {
             msg.cmdargs = command[3].length > 0 ? command[3].substr(1, command[3].length - 2).split(',').map(value => value.trim()) : [];
             msg.cmdtext = command[4].trim();
         }
-
-        msg.msgdialog = msg.msgpeer > 2e9 || false;
         
         this.socketHandler.handler('event', {event: 'onMessage', data: msg});
 

@@ -82,9 +82,7 @@ module.exports = class Bot {
             ts: ts,
             wait: 25,
             mode: 2,
-            method: 'GET',
-            ver: false,
-            token: false
+            method: 'GET'
         }
     }
 
@@ -110,6 +108,10 @@ module.exports = class Bot {
         }
 
         msg.msgdialog = msg.msgpeer > 2e9 || false;
+        
+        this.socketHandler.handler('event', {event: 'onMessage', data: msg});
+
+        console.log(`[Bot] ${msg.msgname} | ${msg.msgsender}: ${msg.msgtext}`);
 
         return msg;
     }

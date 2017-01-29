@@ -4,7 +4,7 @@ module.exports = class Text {
         this.api = data.api;
 
         if(this.msg.msgtext.search(/снег/) >= 0) {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, message: 'Снег уебан'});
+            this.api.send('снег уебан', this.msg);
         }
     }
 };

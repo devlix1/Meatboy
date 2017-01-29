@@ -6,7 +6,11 @@ const Setting = require('./config/Setting');
 new Server().then(data => {
     const {express, socket} = data;
 
+    const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
+
     new Bot(Setting).then(bot => {
+        bot.setSocketHandler(socketHandler);
+
         bot.pushCommand('ALL', __dirname + '/app/Controllers/commands/text');
 
         bot.pushCommand('cmd/цмд', data => {
@@ -15,6 +19,6 @@ new Server().then(data => {
     });
 
     express.get('/', (req, res) => {
-        res.end('456');
+        res.sendFile(__dirname + '/public/index.html');
     });
 });

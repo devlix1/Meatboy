@@ -105,6 +105,7 @@ module.exports = class Bot {
             msgts: data[4],
             msgname: data[5],
             msgtext: data[6],
+            msgtextl: data[6].toLowerCase(),
             msgattach: data[7],
         };
 

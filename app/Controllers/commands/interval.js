@@ -12,7 +12,7 @@ module.exports = class Interval {
 
     snow() {
         setInterval(() => {
-            this.api.send('снег уебан', this.id);
+            this.api.send('[id124282392|снег] уебан', this.id);
         }, (1000 * 60) * 20);
     }
 

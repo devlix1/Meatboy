@@ -1,6 +1,13 @@
 module.exports = class VkProps {
     send(text, msg, options) {
-        this.call('messages.send', {peer_id: msg.msgpeer, message: text});
+        const data = {};
+
+        if (typeof msg === 'object')
+            data.id = msg.msgpeer;
+        else
+            data.id = msg;
+
+        this.call('messages.send', {peer_id: data.id, message: text});
     }
 
     getAlbumPhoto(album) {

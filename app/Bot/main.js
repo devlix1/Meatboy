@@ -76,7 +76,7 @@ module.exports = class Bot {
             this.cmds[alias].handler = handler;
         } else {
             this.cmds[alias].callback = false;
-            this.cmds[alias].class = new (require(handler))();
+            this.cmds[alias].class = new (require(handler))(this.api);
         }
     }
 
@@ -121,7 +121,7 @@ module.exports = class Bot {
         
         this.socketHandler.handler('event', {event: 'onMessage', data: msg});
 
-        console.log(`[Bot] ${msg.msgname} | ${msg.msgsender}: ${msg.msgtext}`);
+        console.log(`[Bot] ${msg.msgname} (${msg.msgpeer}) | ${msg.msgsender}: ${msg.msgtext}`);
 
         return msg;
     }

@@ -12,8 +12,9 @@ new Server().then(data => {
         bot.setSocketHandler(socketHandler);
 
         bot.pushCommand('ALL', __dirname + '/app/Controllers/commands/text');
-        bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
+        bot.pushCommand('INTERVAL', __dirname + '/app/Controllers/commands/interval');
 
+        bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
         bot.pushCommand('тест', data => {
             data.api.send(123, data.msg);
         });

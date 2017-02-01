@@ -7,13 +7,13 @@ module.exports = class Interval {
     }
 
     setIntervals() {
-        this.snow();
+        //this.snow();
     }
 
     snow() {
-        setInterval(() => {
-            this.api.send('[id124282392|снег] уебан', this.id);
-        }, (1000 * 60) * 20);
+        /*setInterval(() => {
+            this.api.send('снег не захотел быть в центре событий', this.id);
+        }, (1000 * 60) * 20);*/
     }
 
     handler(data) {

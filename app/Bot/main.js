@@ -20,10 +20,14 @@ module.exports = class Bot {
 
     getLongPoll() {
         this.api.call('messages.getLongPollServer', {ver: false}).then(data => {
-            this.longPoll = data;
-            this.longPoll.url = 'https://' + this.longPoll.server;
+            if (data) {
+                this.longPoll = data;
+                this.longPoll.url = 'https://' + this.longPoll.server;
 
-            this.callLongPoll(data.ts);
+                this.callLongPoll(data.ts);
+            } else {
+                this.getLongPoll();
+            }
         });
     }
 

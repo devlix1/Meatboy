@@ -3,6 +3,10 @@ module.exports = new class {
         this.request = require('request-promise');
     }
 
+    http(object) {
+        return this.request(object);
+    }
+
     get(url, object) {
         return this.request({url: url, method: 'GET', qs: object});
     }

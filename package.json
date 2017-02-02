@@ -9,7 +9,14 @@
     "request-promise": "^4.1.1",
     "socket.io": "^1.7.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "style-loader": "^0.13.1",
+    "vue": "^2.1.10",
+    "vue-loader": "^10.2.1",
+    "vue-template-compiler": "^2.1.10",
+    "webpack": "^2.2.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

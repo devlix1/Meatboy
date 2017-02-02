@@ -1,8 +1,63 @@
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io.connect('https://devlix.info');
-  socket.on('event', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-</script>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <title>Meatboy devlix1</title>
+  <meta name="description" content="Meatbot for guys">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="devlix1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:type" content="page">
+  <meta property="og:title" content="Meatboy devlix1">
+  <meta property="og:description" content="cool description">
+  <meta property="og:url" content="https://devlix.info">
+  <meta property="og:image" content="https://devlix.info/assets/images/og-logo.png">
+  <meta property="og:image" content="https://devlix.info/assets/images/small-logo.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/2f1c8a5a4d.css" rel="stylesheet">
+  <link href="/assets/css/devlix.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item">
+          <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
+        </a>
+      </div>
+
+      <span class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+
+      <div class="nav-right nav-menu">
+        <a class="nav-item">
+          Тут типа меню, да
+        </a>
+
+        <span class="nav-item">
+          <a class="button" href="https://github.com/devlix1/meatboy">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+            <span>Бот на гитхабе</span>
+          </a>
+        </span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div id="chat">
+
+    </div>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/assets/js/build.js"></script>
+</body>
+</html>

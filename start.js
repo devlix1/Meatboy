@@ -4,7 +4,7 @@ const Bot = require('./app/Bot/main');
 const Setting = require('./config/Setting');
 
 new Server().then(data => {
-    const {express, socket} = data;
+    const {express, socket, server} = data;
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
 
@@ -19,7 +19,9 @@ new Server().then(data => {
         });
     });
 
-    express.get('/', (req, res) => {
+    server.get('/', (req, res) => {
         res.sendFile(__dirname + '/public/index.html');
     });
+
+    server.use('/assets', express.static(__dirname + '/public/assets/'));
 });

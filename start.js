@@ -15,6 +15,8 @@ new Server().then(data => {
 
         bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
         
+        bot.pushCommand('memes/meme/мем/мемес/мемы', __dirname + '/app/Controllers/commands/memes');
+        
         bot.pushCommand('imgtest', data => {
             data.api.stuff.getFileBytes('https://pp.vk.me/c837138/v837138979/148a3/sO_g6_BuId8.jpg').then(buffer => {
                 data.api.complexMessageImage(buffer).then(photo => {

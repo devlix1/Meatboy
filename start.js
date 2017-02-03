@@ -14,9 +14,6 @@ new Server().then(data => {
         bot.pushCommand('ALL', __dirname + '/app/Controllers/commands/text');
 
         bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
-        bot.pushCommand('тест', data => {
-            data.api.send(123, data.msg);
-        });
     });
 
     server.get('/', (req, res) => {

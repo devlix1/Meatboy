@@ -8,7 +8,7 @@ const vue = new Vue({
     el: '#chat',
     render: h => h(App),
     mounted: () => {
-        const socket = io('http://localhost');
+        const socket = io('localhost');
         socket.on('event', msg => {
             data.msg.push(msg.data)
         });

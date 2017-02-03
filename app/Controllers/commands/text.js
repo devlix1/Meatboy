@@ -21,7 +21,7 @@ module.exports = class Text {
         }
 
         if (this.msg.msgtextl.search(/(бот|bot)/) >= 0) {
-            this.bot();
+            //this.bot();
         }
     }
 

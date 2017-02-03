@@ -21,4 +21,22 @@ module.exports = new class {
             });
         });
     }
+
+    getFileBytes(url) {
+        const http = require('https');
+
+        return new Promise(resolve => {
+            http.get(url, data => {
+                const buff = [];
+
+                data.on('data', value => {
+                    buff.push(value);
+                });
+
+                data.on('end', () => {
+                    resolve(Buffer.concat(buff));
+                });
+            });
+        });
+    }
 };

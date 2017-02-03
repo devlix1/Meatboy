@@ -1,4 +1,4 @@
-module.exports = class VkProps {
+module.exports = class VkProps extends require('./photo') {
     send(text, msg, options) {
         const data = {};
 
@@ -8,13 +8,5 @@ module.exports = class VkProps {
             data.id = msg;
 
         this.call('messages.send', {peer_id: data.id, message: text});
-    }
-
-    getAlbumPhoto(album) {
-        return new Promise(resolve => {
-            this.call('photos.get', {album_id: album}).then(data => {
-                resolve(this.stuff.randomArray(data.items));
-            });
-        });
     }
 };

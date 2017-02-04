@@ -3,8 +3,7 @@ module.exports = class Memes {
         this.api = data.api;
         this.msg = data.msg;
 
-        this.getMemes()
-        .then(meme => {
+        this.getMemes().then(meme => {
             this.api.stuff.getFileBytes(meme).then(buffer => {
                 this.api.complexMessageImage(buffer).then(photo => {
                     this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: `photo${photo[0].owner_id}_${photo[0].id}`});
@@ -16,8 +15,7 @@ module.exports = class Memes {
     getMemes() {
         const cheerio = require('cheerio');
         return new Promise((resolve, reject) => {
-            this.api.request.get(`http://troll-face.ru/page/${this.api.stuff.random(0, 142)}`)
-            .then(data => {
+            this.api.request.get(`http://troll-face.ru/page/${this.api.stuff.random(0, 142)}`).then(data => {
                 const $ = cheerio.load(data);
                 const memes = [];
                 $('.meme-img').each((i, el) => {

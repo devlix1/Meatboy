@@ -19,7 +19,7 @@ module.exports = class Memes {
                 const $ = cheerio.load(data);
                 const memes = [];
                 $('.meme-img').each((i, el) => {
-                   memes.push(el.attribs.src) 
+                    memes.push(el.attribs.src);
                 });
                 resolve(this.api.stuff.randomArray(memes));
             }).catch(err => reject(err));

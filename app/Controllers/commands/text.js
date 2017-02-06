@@ -1,7 +1,11 @@
 module.exports = class Text {
     constructor() {
-        this.albums = {meat: 240387046, adolf: 240389520, moar: 240544243};
-        this.gists = {bot: '81e8cfd2734f4ac3d6b815bba01712ae'};
+        this.albums = {
+            meat: 240387046,
+            adolf: 240389520,
+            moar: 240544243,
+            lisiy: 240781505
+        };
     }
 
     handler(data) {
@@ -20,8 +24,8 @@ module.exports = class Text {
             this.moar();
         }
 
-        if (this.msg.msgtextl.search(/(бот|bot)/) >= 0) {
-            //this.bot();
+        if (this.msg.msgtextl.search(/(лыс.*?|скин|турчик|плеш|физрук)/) >= 0) {
+            this.lisiy();
         }
     }
 
@@ -43,9 +47,9 @@ module.exports = class Text {
         });
     }
 
-    bot() {
-        this.api.stuff.getGist(this.gists['bot']).then(data => {
-            this.api.send(data.files.Bot.content, this.msg);
+    lisiy() {
+        this.api.getAlbumPhoto(this.albums['lisiy']).then(photo => {
+            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
         });
     }
 };

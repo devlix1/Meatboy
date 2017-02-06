@@ -3,12 +3,27 @@ module.exports = class Cmd {
         this.msg = data.msg;
         this.api = data.api;
 
+        if (data.msg.cmdtext === 'process') {
+            this.process();
+        } else {
+            this.cmdlog();
+        }
+    }
+
+    cmdlog() {
         let string = '';
 
-        for (let name in data.msg) {
-            string += name + ' => ' + data.msg[name] + '\n';
+        for (let name in this.msg) {
+            string += name + ' => ' + this.msg[name] + '\n';
         }
 
-        data.api.send(string, data.msg);
+        this.api.send(string, this.msg);
+    }
+
+    process() {
+        const time = new Date(1970,0,1);
+        time.setSeconds(process.uptime());
+        
+        this.api.send(time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"), this.msg);
     }
 };

@@ -4,7 +4,7 @@ module.exports = class Bot {
         this.socketHandler = false;
 
         this.longPoll = {};
-        this.cmds = {};
+        this.cmds = {'ALLMSG': []};
 
         this.api = require('../Modules/vk');
 
@@ -55,33 +55,31 @@ module.exports = class Bot {
     findCommand(msg) {
         const data = {api: this.api, msg};
 
-        if (this.cmds['ALL'])
-            this.cmds['ALL'].class.handler(data);
+        this.cmds['ALLMSG'].forEach(controller => {
+            controller.handler(data);
+        });
         
         if (msg.cmdname) {
             for (let cmd in this.cmds) {
                 const alias = cmd.split('/');
 
                 if (alias.indexOf(msg.cmdname.toLowerCase()) >= 0) {
-                    if (this.cmds[cmd].callback)
-                        this.cmds[cmd].handler(data);
-                    else
-                        this.cmds[cmd].class.handler(data);
+                    this.cmds[cmd].class.handler(data);
                 }
             }
         }
     }
 
-    pushCommand(alias, handler) {
+    pushCommand(alias, options, handler) {
         this.cmds[alias] = {};
+        options = Object.assign({all: false}, options);
 
-        if (typeof handler === 'function') {
-            this.cmds[alias].callback = true;
-            this.cmds[alias].handler = handler;
+        if (options.all) {
+            this.cmds['ALLMSG'].push(new (require(handler))(this.api));
         } else {
-            this.cmds[alias].callback = false;
             this.cmds[alias].class = new (require(handler))(this.api);
-        }
+            this.cmds[alias].options = options;
+        }   
     }
 
     setSocketHandler(handler) {

@@ -21,9 +21,13 @@ module.exports = class Cmd {
     }
 
     process() {
-        const time = new Date(1970,0,1);
-        time.setSeconds(process.uptime());
-        
-        this.api.send(time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"), this.msg);
+        this.api.send(this.tsToTime(process.uptime()), this.msg);
     }
+
+    tsToTime(ts) {
+        return [ts / 518400, ts / 21600, ts / 360, ts].map(value => {
+            const c = Math.floor(value);
+            return c > 9 ? c : '0' + c;
+        }).join(':');
+    } 
 };

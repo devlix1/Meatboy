@@ -23,7 +23,8 @@ module.exports = new class {
     }
 
     getFileBytes(url) {
-        const http = require('http');
+        const parse = new (require('url').URL)(url);
+        const http = parse.protocol === 'https:' ? require('https') : require('http');
 
         return new Promise(resolve => {
             http.get(url, data => {

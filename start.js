@@ -11,10 +11,9 @@ new Server().then(data => {
     new Bot(Setting).then(bot => {
         bot.setSocketHandler(socketHandler);
 
-        bot.pushCommand('ALL', __dirname + '/app/Controllers/commands/text');
-
-        bot.pushCommand('cmd/цмд', __dirname + '/app/Controllers/commands/cmd');
-        bot.pushCommand('memes/meme/мем/мемес/мемы', __dirname + '/app/Controllers/commands/memes');
+        bot.pushCommand('ALL', {all: true}, __dirname + '/app/Controllers/commands/text');
+        bot.pushCommand('cmd/цмд', {}, __dirname + '/app/Controllers/commands/cmd');
+        bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
     });
 
     server.get('/', (req, res) => {

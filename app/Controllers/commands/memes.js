@@ -15,12 +15,14 @@ module.exports = class Memes {
     getMemes() {
         const cheerio = require('cheerio');
         return new Promise((resolve, reject) => {
-            this.api.request.get(`http://troll-face.ru/page/${this.api.stuff.random(0, 142)}`).then(data => {
+            this.api.request.get('http://troll-face.ru/page/' + this.api.stuff.random(0, 142)).then(data => {
                 const $ = cheerio.load(data);
                 const memes = [];
+
                 $('.meme-img').each((i, el) => {
                     memes.push(el.attribs.src);
                 });
+                
                 resolve(this.api.stuff.randomArray(memes));
             }).catch(err => reject(err));
         });

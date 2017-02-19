@@ -58,7 +58,7 @@ module.exports = class Text {
     }
 
     flame() {
-        const text = ['нахуй ты порвался', 'этот уебан горит', 'дырявый чухан))', 'лол, этот чмошник порвался'];
+        const text = ['нахуй ты порвался', 'этот уебан горит', 'этот петух взорвал все к хуям', 'лол, этот чмошник порвался'];
 
         this.api.send(this.api.stuff.randomArray(text), {msg: this.msg, forward: this.msg.msgid});
     }

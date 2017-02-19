@@ -1,11 +1,15 @@
 module.exports = class VkProps extends require('./photo') {
-    send(text, msg, options) {
-        const data = {};
+    send(text, object) {
+        const options = {};
+        const msg = object.msg;
 
-        const filter = text.replace(/(https?:\/\/|)[\wА-я1-9]+\.\w{1,10}/g, data => {
+        options['message'] = text.replace(/(https?:\/\/|)[\wА-я1-9]+\.\w{1,10}/g, data => {
             return '';
         });
 
-        this.call('messages.send', {peer_id: msg.msgpeer, message: filter});
+        options['peer_id'] = object.peer_id || msg.msgpeer;
+        options['forward_messages'] = object.forward || '';
+
+        this.call('messages.send', options);
     }
 };

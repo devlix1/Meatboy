@@ -17,7 +17,7 @@ module.exports = class Cmd {
             string += name + ' => ' + this.msg[name] + '\n';
         }
 
-        this.api.send(string, this.msg);
+        this.api.send(string, {msg: this.msg});
     }
 
     process() {
@@ -28,6 +28,6 @@ module.exports = class Cmd {
             return value > 9 ? value : '0' + value;
         }).join(':');
 
-        this.api.send(time, this.msg);
+        this.api.send(time, {msg: this.msg});
     }
 };

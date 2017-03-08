@@ -8,8 +8,13 @@ module.exports = class Vk extends require('./vkext/props') {
         this.prefix = '[Modules/VK]';
     }
 
-    entry(username, password) {
+    entry(username, password, token) {
         return new Promise(resolve => {
+            if (!username && !password) {
+                this.profile = {token, user_id: null};
+                resolve(this);
+            }
+
             this.request.post(this.uri[1], this.entryObject(username, password)).then(data => {
                 data = this.errors(data);
 

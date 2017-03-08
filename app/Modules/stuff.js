@@ -22,6 +22,22 @@ module.exports = new class {
         });
     }
 
+    getPostBodyJSON(request) {
+        return new Promise(resolve => {
+            const bytes = [];
+
+            request.on('data', chunk => {
+                bytes.push(chunk);
+            });
+
+            request.on('end', () => {
+                const result = Buffer.concat(bytes).toString();
+
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
     getFileBytes(url) {
         const parse = new (require('url').URL)(url);
         const http = parse.protocol === 'https:' ? require('https') : require('http');

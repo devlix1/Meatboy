@@ -1,4 +1,4 @@
-module.exports = class Bot {
+module.exports = class Message {
     constructor(setting) {
         this.setting = setting;
         this.socketHandler = false;

@@ -1,5 +1,6 @@
 const Server = require('./app/Server');
-const Bot = require('./app/Bot/main');
+const Bot = require('./app/Bot/message');
+const Public = require('./app/Bot/public');
 
 const Setting = require('./config/Setting');
 
@@ -16,8 +17,16 @@ new Server().then(data => {
         bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
     });
 
+    const instancePublic = new Public(Setting).then(public => {
+        console.log(public);
+    });
+
     server.get('/', (req, res) => {
         res.sendFile(__dirname + '/public/index.html');
+    });
+
+    server.post('/listener/vk', (req, res) => {
+        instancePublic.hook(req, res);
     });
 
     server.use('/assets', express.static(__dirname + '/public/assets/'));

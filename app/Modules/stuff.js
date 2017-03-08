@@ -33,7 +33,13 @@ module.exports = new class {
             request.on('end', () => {
                 const result = Buffer.concat(bytes).toString();
 
-                resolve(JSON.parse(result));
+                if (result.length > 0) {
+                    try {
+                        resolve(JSON.parse(result));
+                    } catch(e) {
+                        resolve(result);
+                    }
+                }
             });
         });
     }

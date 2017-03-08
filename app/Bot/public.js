@@ -4,7 +4,7 @@ module.exports = class Public {
         this.api = require('../Modules/vk');
 
         return new Promise(resolve => {
-            new this.api().entry(null, null, setting.Public.token).then(api => {
+            new this.api().entry(null, null, this.setting.Public.token).then(api => {
                 this.api = api;
 
                 resolve(this);

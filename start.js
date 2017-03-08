@@ -17,16 +17,14 @@ new Server().then(data => {
         bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
     });
 
-    const instancePublic = new Public(Setting).then(public => {
-        console.log(public);
+    new Public(Setting).then(public => {
+        server.post('/listener/vk', (req, res) => {
+            public.hook(req, res);
+        });
     });
 
     server.get('/', (req, res) => {
         res.sendFile(__dirname + '/public/index.html');
-    });
-
-    server.post('/listener/vk', (req, res) => {
-        instancePublic.hook(req, res);
     });
 
     server.use('/assets', express.static(__dirname + '/public/assets/'));

@@ -13,8 +13,15 @@ module.exports = class Public {
     }
 
     hook(request, response) {
-        this.api.stuff.getPostBodyJSON(request).then(data => {
-            console.log(data);
+        this.api.stuff.getPostBody(request).then(data => {
+            if (data.type === 'confirmation')
+                response.end(this.setting.Public.response);
+            else
+                this.listing(data);
         }); 
+    }
+
+    listing(data) {
+        console.log(data);
     }
 }

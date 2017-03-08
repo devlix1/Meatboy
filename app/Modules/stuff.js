@@ -22,7 +22,7 @@ module.exports = new class {
         });
     }
 
-    getPostBodyJSON(request) {
+    getPostBody(request) {
         return new Promise(resolve => {
             const bytes = [];
 

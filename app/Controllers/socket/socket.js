@@ -11,11 +11,7 @@ module.exports = class Socket {
         return this;
     }
 
-    handler(name, data) {
+    emit(name, data) {
         this.socket.emit(name, data);
-    }
-
-    emit() {
-
     }
 };

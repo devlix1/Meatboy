@@ -13,16 +13,16 @@ module.exports = class Vk extends require('./vkext/props') {
             if (!username && !password) {
                 this.profile = {token, user_id: null};
                 resolve(this);
+            } else {
+                this.request.post(this.uri[1], this.entryObject(username, password)).then(data => {
+                    data = this.errors(data);
+
+                    this.profile = {token: data.access_token, user_id: data.user_id};
+                    
+                    resolve(this);
+                    console.log(this.prefix, 'Хорошо авторизировались, да!');
+                });
             }
-
-            this.request.post(this.uri[1], this.entryObject(username, password)).then(data => {
-                data = this.errors(data);
-
-                this.profile = {token: data.access_token, user_id: data.user_id};
-                
-                resolve(this);
-                console.log(this.prefix, 'Хорошо авторизировались, да!');
-            });
         }).catch(e => {throw new Error(e)});
     }
 

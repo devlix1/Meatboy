@@ -24,4 +24,8 @@ module.exports = class Public {
     listing(data) {
         console.log(data);
     }
+
+    setSocketHandler(handler) {
+        this.socketHandler = handler;
+    }
 }

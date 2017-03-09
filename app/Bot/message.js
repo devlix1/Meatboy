@@ -121,7 +121,7 @@ module.exports = class Message {
             msg.cmdtext = command[4].trim();
         }
         
-        this.socketHandler.handler('event', {event: 'onMessage', data: msg});
+        this.socketHandler.emit('event', {event: 'onMessage', data: msg});
 
         console.log(`[Bot] ${msg.msgname} (${msg.msgpeer}) | ${msg.msgsender}: ${msg.msgtext}`);
 

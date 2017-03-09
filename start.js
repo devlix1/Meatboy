@@ -18,6 +18,8 @@ new Server().then(data => {
     });
 
     new Public(Setting).then(public => {
+        public.setSocketHandler(socketHandler);
+
         server.post('/listener/vk', (req, res) => {
             public.hook(req, res);
         });

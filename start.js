@@ -15,6 +15,7 @@ new Server().then(data => {
         bot.pushCommand('ALL', {all: true}, __dirname + '/app/Controllers/commands/text');
         bot.pushCommand('cmd/цмд', {}, __dirname + '/app/Controllers/commands/cmd');
         bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
+        bot.pushCommand('итоги/итог', {}, __dirname + '/app/Controllers/commands/summary');
     });
 
     new Public(Setting).then(public => {

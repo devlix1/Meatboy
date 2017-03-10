@@ -7,7 +7,7 @@ const vue = new Vue({
     data: {msg: [], other: {db: ''}}
 });
 
-const socket = io('localhost');
+const socket = io('devlix.info');
 socket.on('event', msg => {
     vue.msg.push(msg.data);
 

@@ -4,6 +4,6 @@ module.exports = class Cmd {
         this.api = data.api;
         this.models = data.models;
 
-        this.api.send(this.models.commands.string(), {msg: this.msg});
+        this.api.send(this.models.commands.string() + '\n\n' + this.models.commands.word(), {msg: this.msg});
     }
 };

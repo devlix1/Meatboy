@@ -12,24 +12,30 @@ module.exports = class Text {
     handler(data) {
         this.msg = data.msg;
         this.api = data.api;
+        this.models = data.models;
 
         if (this.msg.msgtextl.search(/(мясо|meat|myaso|мяс.*?)/) >= 0) {
+            this.models.commands.addWord(this.msg.msgtext.match(/(мясо|meat|myaso|мяс.*?)/)[1]);
             this.meat();
         }
 
         if (this.msg.msgtextl.search(/(o\/|0\/|1488|о\/|киев|украина)/) >= 0) {
+            this.models.commands.addWord(this.msg.msgtext.match(/(o\/|0\/|1488|о\/|киев|украина)/)[1]);
             this.adolf();
         }
 
         if (this.msg.msgtextl.search(/(moar|моар|больше|ооо)/) >= 0) {
+            this.models.commands.addWord(this.msg.msgtext.match(/(moar|моар|больше|ооо)/)[1]);
             this.moar();
         }
 
         if (this.msg.msgtextl.search(/(лыс.*?|скин|турчик|плеш|физрук)/) >= 0) {
+            this.models.commands.addWord(this.msg.msgtext.match(/(лыс.*?|скин|турчик|плеш|физрук)/)[1]);
             this.lisiy();
         }
 
         if (this.msg.msgtextl.search(/(душа|умник|цита*?)/) >= 0) {
+            this.models.commands.addWord(this.msg.msgtext.match(/(душа|умник|цита*?)/)[1]);
             this.soul();
         }
 

@@ -1,21 +1,32 @@
 const Server = require('./app/Server');
 const Bot = require('./app/Bot/message');
 const Public = require('./app/Bot/public');
+const Storage = require('./app/Modules/storage');
 
 const Setting = require('./config/Setting');
 
 new Server().then(data => {
     const {express, socket, server} = data;
 
-    const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
+    const storage = new Storage();
 
-    new Bot(Setting).then(bot => {
+    const models = {
+        commands: new (require('./app/Models/commands'))(storage)
+    };
+
+    const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
+    
+    storage.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
+
+    new Bot(Setting, models).then(bot => {
         bot.setSocketHandler(socketHandler);
 
         bot.pushCommand('ALL', {all: true}, __dirname + '/app/Controllers/commands/text');
         bot.pushCommand('cmd/цмд', {}, __dirname + '/app/Controllers/commands/cmd');
         bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
         bot.pushCommand('итоги/итог', {}, __dirname + '/app/Controllers/commands/summary');
+
+        bot.pushCommand('стат/статистика/stat', {}, __dirname + '/app/Controllers/commands/stat');
     });
 
     new Public(Setting).then(public => {

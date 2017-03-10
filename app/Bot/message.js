@@ -1,6 +1,7 @@
 module.exports = class Message {
-    constructor(setting) {
+    constructor(setting, models) {
         this.setting = setting;
+        this.models = models;
         this.socketHandler = false;
 
         this.longPoll = {};
@@ -53,7 +54,7 @@ module.exports = class Message {
     }
 
     findCommand(msg) {
-        const data = {api: this.api, msg};
+        const data = {api: this.api, models: this.models, msg};
 
         this.cmds['ALLMSG'].forEach(controller => {
             controller.handler(data);
@@ -122,6 +123,9 @@ module.exports = class Message {
         }
         
         this.socketHandler.emit('event', {event: 'onMessage', data: msg});
+        
+        if (msg.cmdtrigger)
+            this.models.commands.add(msg.cmdtrigger);
 
         console.log(`[Bot] ${msg.msgname} (${msg.msgpeer}) | ${msg.msgsender}: ${msg.msgtext}`);
 

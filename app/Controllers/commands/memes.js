@@ -27,4 +27,4 @@ module.exports = class Memes {
             }).catch(err => reject(err));
         });
     }
-}
+};

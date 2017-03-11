@@ -1,11 +1,11 @@
 module.exports = class Text {
     constructor() {
         this.albums = {
-            meat: 240387046,
-            adolf: 240389520,
-            moar: 240544243,
-            lisiy: 240781505,
-            soul: 241255170
+            meat: [/(мясо|meat|myaso|мяс.*?)/, 240387046],
+            adolf: [/(o\/|0\/|1488|о\/|киев|украина)/, 240389520],
+            moar: [/(moar|моар|больше|ооо)/, 240544243],
+            lisiy: [/(лыс.*?|скин|турчик|плеш|физрук)/, 240781505],
+            soul: [/(душа|умник|цита*?)/, 241255170]
         };
     }
 
@@ -14,69 +14,16 @@ module.exports = class Text {
         this.api = data.api;
         this.models = data.models;
 
-        if (this.msg.msgtextl.search(/(мясо|meat|myaso|мяс.*?)/) >= 0) {
-            this.models.commands.addWord(this.msg.msgtext.match(/(мясо|meat|myaso|мяс.*?)/)[1]);
-            this.meat();
+        for (let key in this.albums) {
+            if (this.msg.msgtextl.search(this.albums[key][0]) >= 0) {
+                this.models.commands.addWord(this.msg.msgtext.match(this.albums[key][0])[1]);
+
+                this.api.getAlbumPhoto(this.albums[key][1]).then(photo => {
+                    this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
+                });
+
+                break;
+            }
         }
-
-        if (this.msg.msgtextl.search(/(o\/|0\/|1488|о\/|киев|украина)/) >= 0) {
-            this.models.commands.addWord(this.msg.msgtext.match(/(o\/|0\/|1488|о\/|киев|украина)/)[1]);
-            this.adolf();
-        }
-
-        if (this.msg.msgtextl.search(/(moar|моар|больше|ооо)/) >= 0) {
-            this.models.commands.addWord(this.msg.msgtext.match(/(moar|моар|больше|ооо)/)[1]);
-            this.moar();
-        }
-
-        if (this.msg.msgtextl.search(/(лыс.*?|скин|турчик|плеш|физрук)/) >= 0) {
-            this.models.commands.addWord(this.msg.msgtext.match(/(лыс.*?|скин|турчик|плеш|физрук)/)[1]);
-            this.lisiy();
-        }
-
-        if (this.msg.msgtextl.search(/(душа|умник|цита*?)/) >= 0) {
-            this.models.commands.addWord(this.msg.msgtext.match(/(душа|умник|цита*?)/)[1]);
-            this.soul();
-        }
-
-        if (this.msg.msgtext.search(/[A-ZА-Я]{5}/) >= 0) {
-            this.flame();
-        }
-    }
-
-    meat() {
-        this.api.getAlbumPhoto(this.albums['meat']).then(photo => {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
-        });
-    }
-
-    adolf() {
-        this.api.getAlbumPhoto(this.albums['adolf']).then(photo => {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
-        });
-    }
-
-    moar() {
-        this.api.getAlbumPhoto(this.albums['moar']).then(photo => {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
-        });
-    }
-
-    lisiy() {
-        this.api.getAlbumPhoto(this.albums['lisiy']).then(photo => {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
-        });
-    }
-
-    soul() {
-        this.api.getAlbumPhoto(this.albums['soul']).then(photo => {
-            this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});
-        });
-    }
-
-    flame() {
-        const text = ['нахуй ты порвался', 'этот уебан горит', 'этот петух взорвал все к хуям', 'лол, этот чмошник порвался'];
-
-        this.api.send(this.api.stuff.randomArray(text), {msg: this.msg, forward: this.msg.msgid});
     }
 };

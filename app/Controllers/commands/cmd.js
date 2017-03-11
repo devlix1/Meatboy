@@ -3,11 +3,10 @@ module.exports = class Cmd {
         this.msg = data.msg;
         this.api = data.api;
 
-        if (data.msg.cmdtext === 'process') {
+        if (data.msg.cmdtext === 'process')
             this.process();
-        } else {
+        else
             this.cmdlog();
-        }
     }
 
     cmdlog() {

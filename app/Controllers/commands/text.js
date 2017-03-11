@@ -15,8 +15,9 @@ module.exports = class Text {
         this.models = data.models;
 
         for (let key in this.albums) {
+            console.log(this.msg.msgtextl, this.msg.msgtextl.search(this.albums[key][0]));
             if (this.msg.msgtextl.search(this.albums[key][0]) >= 0) {
-                this.models.commands.addWord(this.msg.msgtext.match(this.albums[key][0])[1]);
+                this.models.commands.addWord(this.msg.msgtextl.match(this.albums[key][0])[1]);
 
                 this.api.getAlbumPhoto(this.albums[key][1]).then(photo => {
                     this.api.call('messages.send', {peer_id: this.msg.msgpeer, attachment: 'photo' + photo.owner_id + '_' + photo.id});

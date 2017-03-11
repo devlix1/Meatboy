@@ -15,7 +15,6 @@ module.exports = class Text {
         this.models = data.models;
 
         for (let key in this.albums) {
-            console.log(this.msg.msgtextl, this.msg.msgtextl.search(this.albums[key][0]));
             if (this.msg.msgtextl.search(this.albums[key][0]) >= 0) {
                 this.models.commands.addWord(this.msg.msgtextl.match(this.albums[key][0])[1]);
 

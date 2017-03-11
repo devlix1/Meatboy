@@ -114,6 +114,7 @@ module.exports = class Message {
 
         msg.msgdialog = msg.msgpeer > 2e9 || false;
         msg.msgsender = msg.msgpeer > 2e9 ? msg.msgattach.from : msg.msgpeer;
+        msg.msgfriend = (msg.msgflag & 32) !== 0;
 
         if (command) {
             msg.cmdtrigger = command[1];

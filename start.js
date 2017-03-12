@@ -2,6 +2,7 @@ const Server = require('./app/Server');
 const Bot = require('./app/Bot/message');
 const Public = require('./app/Bot/public');
 const Storage = require('./app/Modules/storage');
+const StorageTet = require('./app/Modules/storage_n');
 
 const Setting = require('./config/Setting');
 
@@ -9,9 +10,11 @@ new Server().then(data => {
     const {express, socket, server} = data;
 
     const storage = new Storage();
+    const storageTest = new StorageTet();
 
     const models = {
-        commands: new (require('./app/Models/commands'))(storage)
+        commands: new (require('./app/Models/commands'))(storage),
+        commandst: new (require('./app/Models/commands_t'))(storageTest)
     };
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();

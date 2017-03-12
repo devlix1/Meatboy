@@ -126,7 +126,7 @@ module.exports = class Message {
         this.socketHandler.emit('event', {event: 'onMessage', data: msg});
         
         if (msg.cmdtrigger)
-            this.models.commands.add(msg.cmdtrigger);
+            this.models.commandst.add(msg.cmdtrigger);
 
         console.log(`[Bot] ${msg.msgname} (${msg.msgpeer}) | ${msg.msgsender}: ${msg.msgtext}`);
 

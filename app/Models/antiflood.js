@@ -1,11 +1,6 @@
 module.exports = class {
     constructor(db) {
         this.db = db;
-        this.limits = ['text'];
-
-        this.limits.forEach(value => {
-            this.db.setBlock('memory').setBlock('flood').set(value, false).clear();
-        });
     }
 
     isFlood(name) {
@@ -15,12 +10,14 @@ module.exports = class {
             db.set(name, true).clear();
 
             setTimeout(() => {
-                db.set(name, false).clear();
-            }, 60000);
+                this.db.setBlock('memory').setBlock('flood').set(name, false).clear();
+            }, 10000);
 
             return false;
         }
-        
+
+        db.clear();
+
         return true;
     }
 };

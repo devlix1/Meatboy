@@ -16,9 +16,11 @@ new Server().then(data => {
     models['commands'] = new (require('./app/Models/commands'))(storage);
     models['commandst'] = new (require('./app/Models/commands_t'))(storageTest);
     models['antiflood'] = new (require('./app/Models/antiflood'))(storageTest);
+    models['userinfo'] = new (require('./app/Models/userinfo'))(storageTest);
 
     // Которые только в блоке file
     storageTest.setDatabaseFile('groups', {event: true, interval: 10});
+    storageTest.setDatabaseFile('users', {event: true, interval: 10});
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
     
@@ -28,12 +30,13 @@ new Server().then(data => {
     new Bot(Setting, models).then(bot => {
         bot.setSocketHandler(socketHandler);
 
-        bot.pushCommand('ALL', {all: true}, __dirname + '/app/Controllers/commands/text');
-        bot.pushCommand('cmd/цмд', {}, __dirname + '/app/Controllers/commands/cmd');
-        bot.pushCommand('memes/meme/мем/мемес/мемы', {}, __dirname + '/app/Controllers/commands/memes');
-        bot.pushCommand('итоги/итог', {}, __dirname + '/app/Controllers/commands/summary');
+        bot.pushCommand('ALL', {context: true}, __dirname + '/app/Controllers/commands/text');
+        bot.pushCommand('history/история/user/юзер', {context: true, cmd: true}, __dirname + '/app/Controllers/commands/history');
+        bot.pushCommand('cmd/цмд', {cmd: true}, __dirname + '/app/Controllers/commands/cmd');
+        bot.pushCommand('memes/meme/мем/мемес/мемы', {cmd: true}, __dirname + '/app/Controllers/commands/memes');
+        bot.pushCommand('итоги/итог', {cmd: true}, __dirname + '/app/Controllers/commands/summary');
 
-        bot.pushCommand('стат/статистика/stat', {}, __dirname + '/app/Controllers/commands/stat');
+        bot.pushCommand('стат/статистика/stat', {cmd: true}, __dirname + '/app/Controllers/commands/stat');
     });
 
     new Public(Setting).then(public => {

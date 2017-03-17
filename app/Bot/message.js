@@ -57,7 +57,7 @@ module.exports = class Message {
         const data = {api: this.api, models: this.models, msg};
 
         this.cmds['ALLMSG'].forEach(controller => {
-            controller.handler(data);
+            controller.handler(data, 'context');
         });
         
         if (msg.cmdname) {
@@ -65,7 +65,7 @@ module.exports = class Message {
                 const alias = cmd.split('/');
 
                 if (alias.indexOf(msg.cmdname.toLowerCase()) >= 0) {
-                    this.cmds[cmd].class.handler(data);
+                    this.cmds[cmd].class.handler(data, 'cmd');
                 }
             }
         }
@@ -75,12 +75,11 @@ module.exports = class Message {
         this.cmds[alias] = {};
         options = Object.assign({all: false}, options);
 
-        if (options.all) {
+        if (options.context)
             this.cmds['ALLMSG'].push(new (require(handler))(this.api));
-        } else {
-            this.cmds[alias].class = new (require(handler))(this.api);
-            this.cmds[alias].options = options;
-        }   
+            
+        if (options.cmd)
+            this.cmds[alias].class = new (require(handler))(this.api);  
     }
 
     setSocketHandler(handler) {

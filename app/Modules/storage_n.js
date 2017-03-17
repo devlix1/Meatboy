@@ -68,11 +68,15 @@ module.exports = class {
     set(key, value) {
         this.block[key] = value;
 
+        this.event();
+
         return this;
     }
 
     delete(key) {
         delete this.block[key];
+
+        this.event();
 
         return this;
     }
@@ -94,11 +98,15 @@ module.exports = class {
     inc(num = 1) {
         this.block[this.watch[0]] = this.block[this.watch[0]] + num;
 
+        this.event();
+
         return this;
     }
 
     dec(num = 1) {
         this.block[this.watch[0]] = this.block[this.watch[0]] - num;
+
+        this.event();
 
         return this;
     }

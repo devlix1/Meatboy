@@ -14,7 +14,8 @@ new Server().then(data => {
 
     const models = {
         commands: new (require('./app/Models/commands'))(storage),
-        commandst: new (require('./app/Models/commands_t'))(storageTest)
+        commandst: new (require('./app/Models/commands_t'))(storageTest),
+        antiflood: new (require('./app/Models/antiflood'))(storageTest)
     };
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();

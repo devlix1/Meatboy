@@ -12,11 +12,13 @@ new Server().then(data => {
     const storage = new Storage();
     const storageTest = new StorageTet();
 
-    const models = {
-        commands: new (require('./app/Models/commands'))(storage),
-        commandst: new (require('./app/Models/commands_t'))(storageTest),
-        antiflood: new (require('./app/Models/antiflood'))(storageTest)
-    };
+    const models = {};
+    models['commands'] = new (require('./app/Models/commands'))(storage);
+    models['commandst'] = new (require('./app/Models/commands_t'))(storageTest);
+    models['antiflood'] = new (require('./app/Models/antiflood'))(storageTest);
+
+    // Которые только в блоке file
+    storageTest.setDatabaseFile('groups', {event: true, interval: 10});
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
     

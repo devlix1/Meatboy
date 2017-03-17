@@ -16,7 +16,6 @@ module.exports = class Socket {
     }
 
     storageEvent(data, statusMemory) {
-        console.log(this.emit, data, statusMemory);
         if (statusMemory)
             this.emit('event', {event: 'setDatabase', data});
         else

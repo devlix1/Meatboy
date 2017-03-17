@@ -4,7 +4,7 @@ module.exports = class {
     }
 
     add(trigger) {
-        const local = this.db.setBlock('memory').setBlock('groups').setBlock('triggers');
+        const local = this.db.setBlock('file').setBlock('groups').setBlock('triggers');
 
         if (!local.get(trigger))
             local.set(trigger, 0);
@@ -13,7 +13,7 @@ module.exports = class {
     }
 
     string() {
-        const triggers = this.db.setBlock('memory').setBlock('groups').setBlock('triggers').section();
+        const triggers = this.db.setBlock('file').setBlock('groups').setBlock('triggers').section();
         const string = [];
 
         for (let i in triggers) {
@@ -26,7 +26,7 @@ module.exports = class {
     }
 
     addWord(word) {
-        const local = this.db.setBlock('memory').setBlock('groups').setBlock('words');
+        const local = this.db.setBlock('file').setBlock('groups').setBlock('words');
 
         if (!local.get(word))
             local.set(word, 0);
@@ -35,7 +35,7 @@ module.exports = class {
     }
 
     word() {
-        const words = this.db.setBlock('memory').setBlock('groups').setBlock('words').section();
+        const words = this.db.setBlock('file').setBlock('groups').setBlock('words').section();
         const string = [];
 
         for (let i in words) {

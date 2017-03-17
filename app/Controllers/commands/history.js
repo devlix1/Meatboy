@@ -11,10 +11,10 @@ module.exports = class Text {
         const model = this.models.userinfo.setModules(this.api, this.msg);
 
         if (type === 'cmd') {
-            this.api.call('users.get', {user_ids: this.msg.cmdtext}).then(data => {
+            /*this.api.call('users.get', {user_ids: this.msg.cmdtext}).then(data => {
                 if (data)
                     this.send(model.get(data[0].id));
-            });
+            });*/
         } else {
             if (!model.get(this.msg.msgsender))
                 model.set(this.msg.msgsender).then(profile => {});

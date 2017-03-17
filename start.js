@@ -22,7 +22,8 @@ new Server().then(data => {
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
     
-    storage.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
+    //storage.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
+    storageTest.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
 
     new Bot(Setting, models).then(bot => {
         bot.setSocketHandler(socketHandler);

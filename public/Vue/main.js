@@ -8,7 +8,7 @@ const vue = new Vue({
     data: {msg: []}
 });
 
-const socket = io('localhost');
+const socket = io('devlix.info');
 socket.on('event', msg => {
     if (msg.event == 'onMessage')
         vue.msg.push(msg.data);

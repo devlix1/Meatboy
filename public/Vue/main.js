@@ -1,17 +1,19 @@
 import Vue from 'vue';
-import App from './App.vue';
+
+import Messages from './Modules/Messages.vue';
 
 const vue = new Vue({
-    el: '#chat',
-    render: h => h(App),
-    data: {msg: [], other: {db: ''}}
+    el: '#h__payload',
+    render: h => h(Messages),
+    data: {msg: []}
 });
 
-const socket = io('devlix.info');
+const socket = io('localhost');
 socket.on('event', msg => {
-    vue.msg.push(msg.data);
+    if (msg.event == 'onMessage')
+        vue.msg.push(msg.data);
 
-    if (msg.event == 'updateDatabase') {
+    /*if (msg.event == 'updateDatabase') {
         vue.$set(vue.other, 'db', JSON.stringify(msg.data, null, '\t'));
-    }
+    }*/
 });

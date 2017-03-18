@@ -10,37 +10,38 @@ module.exports = class {
         return this;
     }
 
-    get(id) {
-        const db = this.db.setBlock('file').setBlock('users');
+    getUser(id) {
+        return new Promise(resolve => {
+            const user = this.db.setBlock('memory').setBlock('users').get(id);
+            this.db.clear();
 
-        if (db.get(id)) {
-            const data = db.get(id);
-            
-            db.clear();
+            if (user) {
+                this.setLastMessage(id);
 
-            return data;
-        }
-        
-        this.db.clear();
-        
-        this.set(id);
+                resolve(user);
+            } else {
+                this.set(id).then(profile => {
+                    resolve(profile);
+                });
+            }
+        });
     }
 
     set(id) {
         return new Promise(resolve => {
             this.api.call('users.get', {user_ids: id, fields: 'photo_max_orig,city,domain,status'}).then(data => {
-                const profile = this.db.setBlock('file').setBlock('users').set(id, data[0]).get(id);
+                const profile = this.db.setBlock('memory').setBlock('users').set(id, data[0]).get(id);
 
                 this.db.clear();
                 this.setLastMessage(id);
 
-                resolve(this);
+                resolve(profile);
             });
         });
     }
 
     setLastMessage(id) {
-        const profile = this.db.setBlock('file').setBlock('users').get(id);
+        const profile = this.db.setBlock('memory').setBlock('users').get(id);
 
         this.db.clear();
 

@@ -57,7 +57,7 @@ module.exports = class Message {
         const data = {api: this.api, models: this.models, msg};
 
         this.cmds['ALLMSG'].forEach(controller => {
-            controller.handler(data, 'context');
+            controller.handler(data, {type: 'context', socket: this.socketHandler});
         });
         
         if (msg.cmdname) {
@@ -65,7 +65,7 @@ module.exports = class Message {
                 const alias = cmd.split('/');
 
                 if (alias.indexOf(msg.cmdname.toLowerCase()) >= 0) {
-                    this.cmds[cmd].class.handler(data, 'cmd');
+                    this.cmds[cmd].class.handler(data, {type: 'cmd', socket: this.socketHandler});
                 }
             }
         }
@@ -122,7 +122,7 @@ module.exports = class Message {
             msg.cmdtext = command[4].trim();
         }
         
-        this.socketHandler.emit('event', {event: 'onMessage', data: msg});
+        //this.socketHandler.emit('event', {event: 'onMessage', data: msg});
         
         if (msg.cmdtrigger)
             this.models.commandst.add(msg.cmdtrigger);

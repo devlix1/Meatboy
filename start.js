@@ -16,11 +16,10 @@ new Server().then(data => {
     models['commands'] = new (require('./app/Models/commands'))(storage);
     models['commandst'] = new (require('./app/Models/commands_t'))(storageTest);
     models['antiflood'] = new (require('./app/Models/antiflood'))(storageTest);
-    models['userinfo'] = new (require('./app/Models/userinfo'))(storageTest);
+    models['usercache'] = new (require('./app/Models/usercache'))(storageTest);
 
     // Которые только в блоке file
     storageTest.setDatabaseFile('groups', {event: true, interval: 10});
-    storageTest.setDatabaseFile('users', {event: true, interval: 10});
 
     const socketHandler = new (require(__dirname + '/app/Controllers/socket/socket'))(socket).connect();
     
@@ -31,7 +30,7 @@ new Server().then(data => {
         bot.setSocketHandler(socketHandler);
 
         bot.pushCommand('ALL', {context: true}, __dirname + '/app/Controllers/commands/text');
-        bot.pushCommand('history/история/user/юзер', {context: true, cmd: true}, __dirname + '/app/Controllers/commands/history');
+        bot.pushCommand('history', {context: true}, __dirname + '/app/Controllers/commands/history');
         bot.pushCommand('cmd/цмд', {cmd: true}, __dirname + '/app/Controllers/commands/cmd');
         bot.pushCommand('memes/meme/мем/мемес/мемы', {cmd: true}, __dirname + '/app/Controllers/commands/memes');
         bot.pushCommand('итоги/итог', {cmd: true}, __dirname + '/app/Controllers/commands/summary');

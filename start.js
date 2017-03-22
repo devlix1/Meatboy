@@ -26,12 +26,12 @@ new Server().then(data => {
     //storage.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
     storageTest.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
 
-    const insBot = new Bot(Setting, models).then(bot => {
+    new Bot(Setting, models).then(bot => {
         bot.setSocketHandler(socketHandler);
         socketHandler.pushComponent('bot', bot);
     });
 
-    const insPublic = new Public(Setting).then(public => {
+    new Public(Setting).then(public => {
         public.setSocketHandler(socketHandler);
         socketHandler.pushComponent('public', public);
 

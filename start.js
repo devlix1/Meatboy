@@ -26,20 +26,14 @@ new Server().then(data => {
     //storage.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
     storageTest.setEventCallback(socketHandler.storageEvent.bind(socketHandler));
 
-    new Bot(Setting, models).then(bot => {
+    const insBot = new Bot(Setting, models).then(bot => {
         bot.setSocketHandler(socketHandler);
-
-        bot.pushCommand('ALL', {context: true}, __dirname + '/app/Controllers/commands/text');
-        bot.pushCommand('history', {context: true}, __dirname + '/app/Controllers/commands/history');
-        bot.pushCommand('cmd/цмд', {cmd: true}, __dirname + '/app/Controllers/commands/cmd');
-        bot.pushCommand('memes/meme/мем/мемес/мемы', {cmd: true}, __dirname + '/app/Controllers/commands/memes');
-        bot.pushCommand('итоги/итог', {cmd: true}, __dirname + '/app/Controllers/commands/summary');
-
-        bot.pushCommand('стат/статистика/stat', {cmd: true}, __dirname + '/app/Controllers/commands/stat');
+        socketHandler.pushComponent('bot', bot);
     });
 
-    new Public(Setting).then(public => {
+    const insPublic = new Public(Setting).then(public => {
         public.setSocketHandler(socketHandler);
+        socketHandler.pushComponent('public', public);
 
         server.post('/listener/vk', (req, res) => {
             public.hook(req, res);

@@ -1,4 +1,9 @@
 module.exports = class Cmd {
+    constructor() {
+        this.alias = 'cmd/цмд';
+        this.cmd = true;
+    }
+
     handler(data) {
         this.msg = data.msg;
         this.api = data.api;

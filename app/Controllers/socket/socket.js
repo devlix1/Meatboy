@@ -1,6 +1,7 @@
 module.exports = class Socket {
     constructor(socket) {
         this.socket = socket;
+        this.components = {};
     }
 
     connect() {
@@ -20,5 +21,9 @@ module.exports = class Socket {
             this.emit('event', {event: 'setDatabase', data});
         else
             this.emit('event', {event: 'updateDatabase', data});
+    }
+
+    pushComponent(name, instance) {
+        this.components[name] = instance;
     }
 };

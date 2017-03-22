@@ -1,6 +1,6 @@
-module.exports = class Text {
+module.exports = class History {
     constructor() {
-        
+        this.context = true;
     }
 
     handler(data, advance) {

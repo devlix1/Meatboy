@@ -1,4 +1,10 @@
-module.exports = class Text {
+module.exports = class Summary {
+    constructor() {
+        this.alias = 'итоги/итог';
+        this.cmd = true;
+    }
+
+
     handler(data) {
         this.msg = data.msg;
         this.api = data.api;

@@ -8,6 +8,7 @@ module.exports = class Message {
         this.cmds = {'ALLMSG': []};
 
         this.api = require('../Modules/vk');
+        this.fs = require('fs');
 
         return new Promise(resolve => {
             new this.api().entry(setting.Bot.username, setting.Bot.password).then(data => {
@@ -15,6 +16,7 @@ module.exports = class Message {
 
                 resolve(this);
                 this.getLongPoll();
+                this.getCommands();
             });
         });
     }
@@ -65,21 +67,28 @@ module.exports = class Message {
                 const alias = cmd.split('/');
 
                 if (alias.indexOf(msg.cmdname.toLowerCase()) >= 0) {
-                    this.cmds[cmd].class.handler(data, {type: 'cmd', socket: this.socketHandler});
+                    this.cmds[cmd].handler(data, {type: 'cmd', socket: this.socketHandler});
                 }
             }
         }
     }
 
-    pushCommand(alias, options, handler) {
-        this.cmds[alias] = {};
-        options = Object.assign({all: false}, options);
+    getCommands() {
+        const commands = this.fs.readdirSync('./app/Controllers/commands');
 
-        if (options.context)
-            this.cmds['ALLMSG'].push(new (require(handler))(this.api));
-            
-        if (options.cmd)
-            this.cmds[alias].class = new (require(handler))(this.api);  
+        if (commands) {
+            this.cmds = {'ALLMSG': []};
+
+            commands.forEach(file => {
+                const cmd = new (require('../Controllers/commands/' + file));
+
+                if (cmd.context)
+                    this.cmds['ALLMSG'].push(cmd);
+
+                if (cmd.cmd)
+                    this.cmds[cmd.alias] = cmd;
+            });
+        }
     }
 
     setSocketHandler(handler) {

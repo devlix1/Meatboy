@@ -1,5 +1,7 @@
 module.exports = class Text {
     constructor() {
+        this.context = true;
+
         this.albums = {
             meat: [/(мясо|meat|myaso|мяс.*?)/, 240387046],
             adolf: [/(o\/|0\/|1488|о\/|киев|украина)/, 240389520],

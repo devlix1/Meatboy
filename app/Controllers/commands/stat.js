@@ -1,4 +1,9 @@
-module.exports = class Cmd {
+module.exports = class Stat {
+    constructor() {
+        this.alias = 'стат/статистика/stat';
+        this.cmd = true;
+    }
+
     handler(data) {
         this.msg = data.msg;
         this.api = data.api;

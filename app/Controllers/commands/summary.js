@@ -13,14 +13,14 @@ module.exports = class Summary {
             const users = data.users;
 
             this.api.send(this.template().replace(/\{name\}/g, value => {
-                return this.api.stuff.randomArray(users).first_name;
+                return this.api.stuff.randomArray(users).last_name;
             }), {msg: this.msg});
         });
     }
 
     template() {
         const string = [
-            '{name} - отсосал у дауна с именем {name}',
+            '{name} - отсосал у дауна с фамилией {name}',
             '{name} пидар))',
             '{name} уебан',
             '{name} норм сосёт',
